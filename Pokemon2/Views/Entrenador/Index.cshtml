@@ -1,0 +1,75 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    var pokemon = ViewBag.Pokemones;
+}
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<h2>Lista de Entrenadores</h2>
+
+<br />
+<div class="container">
+    <div class="row">
+
+        <div class="col-md-3">
+            <a class="btn bg-primary" href="/Entrenador/Guardar">Agegar Entrenador</a>
+        </div>
+        <div class="col-md-3">
+            <a class="btn bg-primary" href="/Pokemon/Index">Lista de Pokemones</a>
+        </div>
+        <div class="col-md-3">
+            <a class="btn bg-primary" href="/Pokemon/Guardar">Agegar Pokemon</a>
+        </div>
+        <br />
+        <hr />
+        <div class="col-md-12">
+            <form action="/Entrenador/Index" method="get">
+                <input class="form-control" name="Palabra" id="PalabraParaBuscar" />
+                @*<button type="submit">Buscar</button>*@
+            </form>
+        </div>
+        <div class="col-lg-12">
+            <div class="table-responsive" id="Tabla">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <td>Nombre</td>
+                            <td>Ciudad</td>
+                            <td>Pokemones</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var entrandor in Model)
+                        {
+                        <tr>
+                            <td>@entrandor.Nombre</td>
+                            <td>@entrandor.Ciudad.Nombre</td>
+                            <td>
+                                <ul>
+                                    @foreach (var pokemo in entrandor.Relacion)
+                                    {
+                                    <li>
+                                        @pokemo.Pokemon.Nombre
+                                         @Html.ActionLink("Liberar", "Eliminar", new { IdPokemonId = @pokemo.Pokemon.IdPokemon, IdEntrenador = @entrandor.IdEntrenador })
+                                    </li>
+                                    }
+                                </ul>
+                            </td>
+                            <td><a href="/Entrenador/GuardarPokemonEntrenador?IdEntrenador=@entrandor.IdEntrenador">Cazar Pokemon</a></td>
+                        </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $("#PalabraParaBuscar").keyup(function buscador (e) {
+        var palabra = $("#PalabraParaBuscar").val();
+
+        $.ajax({ url: "/Entrenador/EntrenadorTabla?Palabra=" + palabra}).done(function (res) {
+            $("#Tabla").html(res);
+        });
+    });
+</script>

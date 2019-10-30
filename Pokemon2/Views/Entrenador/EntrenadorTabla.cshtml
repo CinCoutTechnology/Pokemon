@@ -1,0 +1,39 @@
+﻿
+@{
+    ViewBag.Title = "EntrenadorTabla";
+    Layout = null;
+}
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <td>Nombre</td>
+            <td>Ciudad</td>
+            <td>Pokemones</td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var entrandor in Model)
+        {
+        <tr>
+            <td>@entrandor.Nombre</td>
+            <td>@entrandor.Ciudad.Nombre</td>
+          
+            <td>
+                <ul>
+                    @foreach (var pokemo in entrandor.Relacion)
+                    {
+                        <li>
+                            @pokemo.Pokemon.Nombre
+                        </li>
+                    }
+                </ul>
+            </td>
+            <td><a href="#">Librerar</a></td>
+            <td><a href="#">Cazar Pokemon</a></td>
+        </tr>
+        }
+    </tbody>
+</table>
+

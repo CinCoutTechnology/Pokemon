@@ -1,0 +1,11 @@
+﻿
+@{
+    ViewBag.Title = "ItemPokemon";
+    Layout = null;
+}
+<tr>
+    <td>
+        @Model.Nombre
+        <input hidden="hidden" name="pokemon[@ViewBag.Index].PokemonId" value="@Model.IdPokemon" />
+    </td>
+</tr>

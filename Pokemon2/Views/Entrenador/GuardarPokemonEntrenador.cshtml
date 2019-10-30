@@ -1,0 +1,70 @@
+﻿
+@{
+    ViewBag.Title = "GuardarPokemonEntrenador";
+    var entrenador = ViewBag.Entrenador;
+    var pokemones = ViewBag.pokemones;
+    
+}
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<h2>Cazar pokemones</h2>
+
+<br />
+<hr />
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <form action="/Entrenador/GuardarPokemon/" method="post">
+
+
+                <div class="form-group">
+                    <label>Nombre del Entrenador</label>
+                    <h2>@entrenador.Nombre</h2>
+                    <input hidden="hidden" name="IdEntrenador"  value="@entrenador.IdEntrenador"/>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Pokemones</label>
+                   <select class="form-control" id="PokemonAelegir">
+                       @foreach(var pokem in pokemones)
+                       {
+                           <option value="@pokem.IdPokemon" >@pokem.Nombre</option>
+                       }
+                   </select>
+                    <br />
+                    <a href="#" class="btn btn-success btn-block" id="BtnAgregarPokemon">Cazar Pokemon</a>
+                </div> 
+                <div class="form-group">
+                    <h3>Numero de Pokemones Cazados @ViewBag.Num</h3>
+                    <table class="table" id="tablatam">
+                        <thead>
+                            <tr>
+                                
+                                <th>Nombre del Pokemon Cazado</th>
+                            </tr>
+                        </thead>
+                        <tbody id="bodyPokemones"></tbody>
+                    </table>
+                </div>
+                <button class="btn btn-primary btn-block" >Guardar</button>
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+
+    $('#BtnAgregarPokemon').click(function (e) {
+        e.preventDefault();
+
+        var index = $('#bodyPokemones').find('tr').length;
+       
+
+        $.ajax({
+            url: '/Entrenador/ItemPokemon?IdEntrenador=' + $('#PokemonAelegir').val() + "&index=" + index,
+            type: 'get'
+        }).done(function (response) {
+            $("#bodyPokemones").append(response);
+        });
+    });
+   
+</script>
+
