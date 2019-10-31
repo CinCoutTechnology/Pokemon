@@ -38,7 +38,6 @@
                     <table class="table" id="tablatam">
                         <thead>
                             <tr>
-                                
                                 <th>Nombre del Pokemon Cazado</th>
                             </tr>
                         </thead>
@@ -52,19 +51,23 @@
 </div>
 <script>
 
+    var count_click = 0;
     $('#BtnAgregarPokemon').click(function (e) {
         e.preventDefault();
 
-        var index = $('#bodyPokemones').find('tr').length;
-       
+        if (count_click < 4) {
+            count_click += 1;
+            var index = $('#bodyPokemones').find('tr').length;
 
-        $.ajax({
-            url: '/Entrenador/ItemPokemon?IdEntrenador=' + $('#PokemonAelegir').val() + "&index=" + index,
-            type: 'get'
-        }).done(function (response) {
-            $("#bodyPokemones").append(response);
-        });
+            $.ajax({
+                url: '/Entrenador/ItemPokemon?IdEntrenador=' + $('#PokemonAelegir').val() + "&index=" + index,
+                type: 'get'
+            }).done(function (response) {
+                $("#bodyPokemones").append(response);
+                });
+        } if (count_click == 4) {
+            alert('Llego a su limite de Pokemones');
+        }
     });
-   
 </script>
 
