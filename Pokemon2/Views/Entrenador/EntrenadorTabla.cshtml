@@ -24,14 +24,14 @@
                 <ul>
                     @foreach (var pokemo in entrandor.Relacion)
                     {
-                        <li>
-                            @pokemo.Pokemon.Nombre
-                        </li>
+                    <li>
+                        @pokemo.Pokemon.Nombre
+                        @Html.ActionLink("Liberar", "Eliminar", new { IdPokemonId = @pokemo.Pokemon.IdPokemon, IdEntrenador = @entrandor.IdEntrenador })
+                    </li>
                     }
                 </ul>
             </td>
-            <td><a href="#">Librerar</a></td>
-            <td><a href="#">Cazar Pokemon</a></td>
+            <td><a href="/Entrenador/GuardarPokemonEntrenador?IdEntrenador=@entrandor.IdEntrenador">Cazar Pokemon</a></td>
         </tr>
         }
     </tbody>
